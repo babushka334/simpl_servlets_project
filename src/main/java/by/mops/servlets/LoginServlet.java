@@ -27,11 +27,15 @@ public class LoginServlet extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             if (username.isEmpty() || password.isEmpty()) {
-                RequestDispatcher req = request.getRequestDispatcher("/jsp/register_3.jsp");
-                req.include(request, response);
+                String path = "/jsp/register_3.jsp";
+                ServletContext servletContext = getServletContext();
+                RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
+                requestDispatcher.include(request, response);
             } else {
-                RequestDispatcher req = request.getRequestDispatcher("/jsp/register_4.jsp");
-                req.forward(request, response);
+                String path = "/jsp/register_4.jsp";
+                ServletContext servletContext = getServletContext();
+                RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
+                requestDispatcher.forward(request, response);
             }
         } else if(request.getParameter("Registration") != null){
             String path = "/jsp/register_1.jsp";
