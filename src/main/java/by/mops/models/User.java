@@ -1,9 +1,15 @@
 package by.mops.models;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class User {
     private Long id;
+    private String username;
+    private String password;
+    private Boolean isAdmin;
+    private Integer role;
+    private LocalDate birthday;
     private String firstName;
     private String lastName;
     private List<Bet> bets;
