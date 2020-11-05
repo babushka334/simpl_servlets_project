@@ -42,9 +42,9 @@ public class UsersDaoJdbcImpl implements UsersDao {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-                return Optional.of(new User(id, firstName, lastName));
+                String firstName = resultSet.getString("firstName");
+                String lastName = resultSet.getString("lastName");
+                //return Optional.of(new User(id, firstName, lastName)); не до конца прописан конструктор
 
             }
             return Optional.empty();
@@ -79,9 +79,9 @@ public class UsersDaoJdbcImpl implements UsersDao {
                 String firstName = resultSet.getString("firstName");
                 String lastName = resultSet.getString("lastName");
 
-                User user = new User(id, firstName, lastName);
+                //User user = new User(id, firstName, lastName);   не до конца прописан конструктор
 
-                users.add(user);
+                //users.add(user);
             }
             return users;
         } catch (SQLException e) {
