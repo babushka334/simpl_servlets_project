@@ -19,19 +19,19 @@ public class AppContextListener implements ServletContextListener {
         ServletContext ctx = servletContextEvent.getServletContext();
         Properties properties = new Properties();
         //initialize DB Connection
-        /*try {
-            properties.load(new FileInputStream(ctx.getRealPath("../resources/db.properties")));
+        try {
+            properties.load(new FileInputStream("C:\\Users\\User\\IdeaProjects\\mops\\src\\main\\resources\\db.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         String dbUrl = properties.getProperty("db.url");
         String dbUsername = properties.getProperty("db.username");
         String dbPassword = properties.getProperty("db.password");
-        String driverClassName = properties.getProperty("db.driverClassName");*/
-        String dbUrl = "jdbc:mysql://localhost:3306/mopsbetdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+        String driverClassName = properties.getProperty("db.driverClassName");
+       /* String dbUrl = "jdbc:mysql://localhost:3306/mopsbetdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
         String dbUsername = "root";
         String dbPassword = "kalini.kostya";
-        String driverClassName = "com.mysql.cj.jdbc.Driver";
+        String driverClassName = "com.mysql.cj.jdbc.Driver";*/
 
         try {
             DBConnection connectionManager = new DBConnection(dbUrl, dbUsername, dbPassword, driverClassName);

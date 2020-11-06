@@ -39,6 +39,7 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
+        request.setCharacterEncoding("UTF-8");
         if (request.getParameter("Login") != null) {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
@@ -80,7 +81,7 @@ public class LoginServlet extends HttpServlet {
                         session.setAttribute("User", user);
                         response.sendRedirect("jsp/register_4.jsp");
                     } else {
-                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
+                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/html/register_3.html");
                         PrintWriter out = response.getWriter();
                         out.println("<font color=red>No user found with given email id, please register first.</font>");
                         rd.include(request, response);
