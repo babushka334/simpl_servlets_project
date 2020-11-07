@@ -1,13 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Registration Form</title>
+    <meta charset="UTF-8">
+    <title>Register Page</title>
 </head>
 <body>
-<h1>Register Form</h1>
+<h3>Provide all the fields for registration.</h3>
 <form action="register" method="post">
     <table style="with: 50%">
         <tr>
@@ -27,13 +25,12 @@
             <td><input type="password" name="password" /></td>
         </tr>
         <tr>
-            <td>Address</td>
-            <td><input type="text" name="address" /></td>
+            <td>birthday</td>
+            <td><input type="text" name="birthday" /></td>
         </tr>
-        <tr>
-            <td>Contact No</td>
-            <td><input type="text" name="contact" /></td>
-        </tr></table>
+    </table>
     <input type="submit" value="Submit" /></form>
+<br>
+If you are registered user, please <a href="login">login</a>.
 </body>
 </html>
