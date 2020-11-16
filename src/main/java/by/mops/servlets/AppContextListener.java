@@ -8,6 +8,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -19,8 +20,8 @@ public class AppContextListener implements ServletContextListener {
         ServletContext ctx = servletContextEvent.getServletContext();
         Properties properties = new Properties();
         //initialize DB Connection
-        try {
-            properties.load(new FileInputStream("C:\\Users\\User\\IdeaProjects\\mops\\src\\main\\resources\\db.properties"));
+        try (InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("db.properties")){
+            properties.load(in);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -28,10 +29,6 @@ public class AppContextListener implements ServletContextListener {
         String dbUsername = properties.getProperty("db.username");
         String dbPassword = properties.getProperty("db.password");
         String driverClassName = properties.getProperty("db.driverClassName");
-       /* String dbUrl = "jdbc:mysql://localhost:3306/mopsbetdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-        String dbUsername = "root";
-        String dbPassword = "kalini.kostya";
-        String driverClassName = "com.mysql.cj.jdbc.Driver";*/
 
         try {
             DBConnection connectionManager = new DBConnection(dbUrl, dbUsername, dbPassword, driverClassName);

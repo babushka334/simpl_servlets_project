@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
             }
 
             if (errorMsg != null) {
-                RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/login.html");
+                RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/html/register_3.html");
                 PrintWriter out = response.getWriter();
                 out.println("<font color=red>" + errorMsg + "</font>");
                 requestDispatcher.include(request, response);
@@ -80,9 +80,9 @@ public class LoginServlet extends HttpServlet {
                         );
                         HttpSession session = request.getSession();
                         session.setAttribute("User", user);
-                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/register_4.jsp");
-                        rd.include(request, response);
-                        //response.sendRedirect("jsp/register_4.jsp");
+                        /*RequestDispatcher rd = getServletContext().getRequestDispatcher("/userHomePage");
+                        rd.include(request, response);*/
+                        response.sendRedirect("userHomePage");
                     } else {
                         RequestDispatcher rd = getServletContext().getRequestDispatcher("/html/register_3.html");
                         PrintWriter out = response.getWriter();

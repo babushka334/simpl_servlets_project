@@ -35,13 +35,23 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("cp1251");
+        response.setCharacterEncoding("UTF-8");
         String firstName = request.getParameter("first_name");
         String lastName = request.getParameter("last_name");
         String password = request.getParameter("password");
         String username = request.getParameter("username");
-        LocalDate birthday = LocalDate.parse(request.getParameter("birthday"));
+        String birth = request.getParameter("birthday");
+        LocalDate birthday = null;
+
         String errorMsg = null;
+        if(birth == "" || birth == null){
+            errorMsg = "Birthday can't be null or incorrect.";
+        }else{
+             birthday = LocalDate.parse(request.getParameter("birthday"));
+            if(birthday.isAfter(LocalDate.parse("2000-01-01")) || birthday.isBefore(LocalDate.parse("1950-01-01"))){
+                errorMsg = "Birthday can't be null or incorrect.";
+            }
+        }
         if(firstName == null || firstName.equals("")){
             errorMsg = "First name can't be null or empty.";
         }
@@ -54,14 +64,8 @@ public class RegisterServlet extends HttpServlet {
         if(lastName == null || lastName.equals("")){
             errorMsg = "Last name can't be null or empty.";
         }
-        if(birthday == null || birthday.isAfter(LocalDate.parse("2000-01-01")) || birthday.isBefore(LocalDate.parse("1950-01-01"))){
-            errorMsg = "Birthday can't be null or incorrect.";
-        }
-        System.out.println("Константин");
-        System.out.println(firstName);
 
-        PrintWriter wr = response.getWriter();
-        wr.println(firstName);
+
 
         if(errorMsg != null){
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/html/register_1.html");
@@ -71,7 +75,7 @@ public class RegisterServlet extends HttpServlet {
         }else{
 
             Connection con = (Connection) getServletContext().getAttribute("DBConnection");
-            try (PreparedStatement ps = con.prepareStatement("insert into Users(username,password,isAdmin,role,birthday,firstName,lastName) values (?,?,?,?,?,?,?)")) {
+            try (PreparedStatement ps = con.prepareStatement("insert into Users(username,password,isAdmin,role,birthday,firstName,lastName,balance) values (?,?,?,?,?,?,?,?)")) {
                 ps.setString(1, username);
                 ps.setString(2, password);
                 ps.setBoolean(3, false);
@@ -79,6 +83,7 @@ public class RegisterServlet extends HttpServlet {
                 ps.setDate(5, java.sql.Date.valueOf(birthday));
                 ps.setString(6, firstName);
                 ps.setString(7, lastName);
+                ps.setDouble(8, 0);
 
                 ps.execute();
 

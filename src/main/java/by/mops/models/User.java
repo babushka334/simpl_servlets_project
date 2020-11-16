@@ -1,9 +1,10 @@
 package by.mops.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private Long id;
     private String username;
     private Boolean isAdmin;
@@ -33,6 +34,8 @@ public class User {
         this.lastName = lastName;
         this.bets = bets;
     }
+
+    public User(){}
 
     public Long getId() {
         return id;
@@ -66,11 +69,11 @@ public class User {
         this.username = username;
     }
 
-    public Boolean getAdmin() {
+    public Boolean getIsAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setIsAdmin(Boolean admin) {
         isAdmin = admin;
     }
 
@@ -96,5 +99,19 @@ public class User {
 
     public void setBets(List<Bet> bets) {
         this.bets = bets;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", isAdmin=" + isAdmin +
+                ", role=" + role +
+                ", birthday=" + birthday +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", bets=" + bets +
+                '}';
     }
 }

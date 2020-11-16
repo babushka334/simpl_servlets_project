@@ -22,23 +22,7 @@ public class HelloServlet extends HttpServlet {
 
     private Connection connection;
 
-    /*@Override
-    public void init() throws ServletException{
-        Properties properties = new Properties();
 
-        try {
-            properties.load(new FileInputStream(getServletContext().getRealPath("/WEB-INF/classes/db.properties")));
-            String dbUrl = properties.getProperty("db.url");
-            String dbUsername = properties.getProperty("db.username");
-            String dbPassword = properties.getProperty("db.password");
-            String driverClassName = properties.getProperty("db.driverClassName");
-
-            Class.forName(driverClassName);
-            connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
-        } catch (IOException | SQLException | ClassNotFoundException e) {
-            throw new IllegalStateException(e);
-        }
-    }*/
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
