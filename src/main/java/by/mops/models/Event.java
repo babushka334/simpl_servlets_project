@@ -1,9 +1,13 @@
 package by.mops.models;
 
-public class Event {
+import java.io.Serializable;
+
+public class Event implements Serializable {
     private Long id;
     private String team1;
     private String team2;
+
+    public Event(){}
 
     public Event(Long id, String team1, String team2) {
         this.id = id;
@@ -16,7 +20,11 @@ public class Event {
         this.team2 = team2;
     }
 
-    public Event(){}
+    public Event(Long id) {
+        this.id = id;
+    }
+
+
 
     public Long getId() {
         return id;
