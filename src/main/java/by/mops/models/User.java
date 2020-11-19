@@ -12,9 +12,10 @@ public class User implements Serializable {
     private LocalDate birthday;
     private String firstName;
     private String lastName;
+    private Double balance = 0.0;
     private List<Bet> bets;
 
-    public User(Long id, String username, Boolean isAdmin, Integer role, LocalDate birthday, String firstName, String lastName) {
+    public User(Long id, String username, Boolean isAdmin, Integer role, LocalDate birthday, String firstName, String lastName, Double balance) {
         this.id = id;
         this.username = username;
         this.isAdmin = isAdmin;
@@ -22,6 +23,7 @@ public class User implements Serializable {
         this.birthday = birthday;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.balance = balance;
     }
 
     public User(Long id, String username, Boolean isAdmin, Integer role, LocalDate birthday, String firstName, String lastName, List<Bet> bets) {
@@ -33,6 +35,22 @@ public class User implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.bets = bets;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
 
     public User(){}

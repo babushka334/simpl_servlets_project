@@ -57,6 +57,30 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Status: </th>
+                    <td>
+                        <input type="text" name="status" size="45"
+                               value="<c:out value='${event.status}' />"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Result: </th>
+                    <td>
+                        <input type="text" name="result" size="45"
+                               value="<c:out value='${event.result}' />"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Total: </th>
+                    <td>
+                        <input type="text" name="total" size="45"
+                               value="<c:out value='${event.total}' />"
+                        />
+                    </td>
+                </tr>
+                <tr>
                     <td colspan="2" align="center">
                         <input type="submit" value="Save" />
                     </td>

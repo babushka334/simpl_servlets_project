@@ -6,18 +6,48 @@ public class Event implements Serializable {
     private Long id;
     private String team1;
     private String team2;
-
+    private String status;
+    private String result;
+    private int total;
     public Event(){}
 
-    public Event(Long id, String team1, String team2) {
+
+
+    public Event(Long id, String team1, String team2, String status) {
         this.id = id;
         this.team1 = team1;
         this.team2 = team2;
+        this.status = status;
     }
 
     public Event(String team1, String team2) {
         this.team1 = team1;
         this.team2 = team2;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public Event(Long id) {

@@ -2,10 +2,12 @@ package by.mops.servlets;
 
 import by.mops.db.dao.BetsDaoJdbcImpl;
 import by.mops.db.dao.EventsDaoJdbcImpl;
+import by.mops.db.dao.UserBetsDaoJdbcImpl;
 import by.mops.db.dao.UsersDaoJdbcImpl;
 import by.mops.models.Bet;
 import by.mops.models.Event;
 import by.mops.models.User;
+import by.mops.models.UserBet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -35,9 +37,11 @@ public class UserHomeServlet extends HttpServlet {
         List<User> users = null;
         List<Event> events = null;
         List<Bet> bets = null;
+        List<UserBet> userBets = null;
         UsersDaoJdbcImpl usersDaoJdbc = new UsersDaoJdbcImpl((Connection) getServletContext().getAttribute("DBConnection"));
         EventsDaoJdbcImpl eventsDaoJdbc = new EventsDaoJdbcImpl((Connection) getServletContext().getAttribute("DBConnection"));
         BetsDaoJdbcImpl betsDaoJdbc = new BetsDaoJdbcImpl((Connection) getServletContext().getAttribute("DBConnection"));
+        UserBetsDaoJdbcImpl userBetsDaoJdbc = new UserBetsDaoJdbcImpl((Connection) getServletContext().getAttribute("DBConnection"));
         events = eventsDaoJdbc.findAll();
         req.setAttribute("events", events);
         if (req.getParameter("action") != null) {
@@ -73,7 +77,8 @@ public class UserHomeServlet extends HttpServlet {
         req.setAttribute("users", users);
         bets = betsDaoJdbc.findAll();
         req.setAttribute("bets", bets);
-
+        userBets = userBetsDaoJdbc.findAll();
+        req.setAttribute("user_bets", userBets);
 
         String path = "/jsp/register_4.jsp";
         ServletContext servletContext = getServletContext();
@@ -133,7 +138,7 @@ public class UserHomeServlet extends HttpServlet {
 
     private void doAddBet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Event event = new Event(Long.parseLong(request.getParameter("id")), request.getParameter("team1"),
-                                request.getParameter("team2"));
+                                request.getParameter("team2"), request.getParameter("status"));
         request.setAttribute("types_of_bet", getTypesOfBet());
         request.setAttribute("event", event);
         RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/edit_or_add_bet.jsp");
@@ -206,13 +211,29 @@ public class UserHomeServlet extends HttpServlet {
 
     private void updateEvent(EventsDaoJdbcImpl eventsDaoJdbc, HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        String team1 = request.getParameter("team1");
-        String team2 = request.getParameter("team2");
         Long id = Long.parseLong(request.getParameter("id"));
         Event event = eventsDaoJdbc.find(id).orElse(new Event());
+        String team1 = request.getParameter("team1");
+        String team2 = request.getParameter("team2");
+        String status = request.getParameter("status");
+        String result;
+        int total;
+        if(request.getParameter("result") != null) {
+            result = request.getParameter("result");
+            event.setResult(result);
+        }
+        if(request.getParameter("total") != null) {
+            total = Integer.parseInt(request.getParameter("total"));
+            event.setTotal(total);
+        }
+        boolean flag = status.equals(event.getStatus());
+        event.setStatus(status);
         event.setTeam1(team1);
         event.setTeam2(team2);
         eventsDaoJdbc.update(event);
+        if(!flag){
+
+        }
         //response.sendRedirect("userHomePage");
     }
 

@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
                 PreparedStatement ps = null;
                 ResultSet rs = null;
                 try {
-                    ps = con.prepareStatement("select id, username, firstName, lastName, birthday, role, isAdmin from Users where username=? and password=? limit 1");
+                    ps = con.prepareStatement("select id, username, firstName, lastName, birthday, role, isAdmin, balance from Users where username=? and password=? limit 1");
                     ps.setString(1, username);
                     ps.setString(2, password);
                     rs = ps.executeQuery();
@@ -76,7 +76,8 @@ public class LoginServlet extends HttpServlet {
                                 rs.getInt("role"),
                                 rs.getDate("birthday").toLocalDate(),
                                 rs.getString("firstName"),
-                                rs.getString("lastName")
+                                rs.getString("lastName"),
+                                rs.getDouble("balance")
                         );
                         HttpSession session = request.getSession();
                         session.setAttribute("User", user);
@@ -84,7 +85,7 @@ public class LoginServlet extends HttpServlet {
                         rd.include(request, response);*/
                         response.sendRedirect("userHomePage");
                     } else {
-                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/html/register_3.html");
+                        RequestDispatcher rd = getServletContext().getRequestDispatcher("/userPage");
                         PrintWriter out = response.getWriter();
                         out.println("<font color=red>No user found with given email id, please register first.</font>");
                         rd.include(request, response);

@@ -28,6 +28,10 @@ public class UsersDaoJdbcImpl implements UsersDao {
     private final String SQL_UPDATE_BY_ID =
             "UPDATE users SET isAdmin = ?, role = ? WHERE id = ?";
 
+    //language=SQL
+    private final String SQL_UPDATE_BALANCE_BY_ID =
+            "UPDATE users SET balance = ? WHERE id = ?";
+
     private Connection connection;
 
     public UsersDaoJdbcImpl(Connection con) {
@@ -52,7 +56,8 @@ public class UsersDaoJdbcImpl implements UsersDao {
             LocalDate birthday = resultSet.getDate("birthday").toLocalDate();
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("lastName");
-            User user = new User(id, username, isAdmin, role, birthday, firstName, lastName);
+            Double balance = resultSet.getDouble("balance");
+            User user = new User(id, username, isAdmin, role, birthday, firstName, lastName, balance);
 
 
             return Optional.of(user);
@@ -80,6 +85,16 @@ public class UsersDaoJdbcImpl implements UsersDao {
 
     }
 
+    public boolean updateBalance(User model){
+        try {
+            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_BALANCE_BY_ID);
+            statement.setDouble(1, model.getBalance());
+            statement.setLong(2, model.getId());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
     @Override
     public boolean delete(Long id) {
         try {
@@ -106,7 +121,8 @@ public class UsersDaoJdbcImpl implements UsersDao {
                 LocalDate birthday = resultSet.getDate("birthday").toLocalDate();
                 String firstName = resultSet.getString("firstName");
                 String lastName = resultSet.getString("lastName");
-                User user = new User(id, username, isAdmin, role, birthday, firstName, lastName);
+                Double balance = resultSet.getDouble("balance");
+                User user = new User(id, username, isAdmin, role, birthday, firstName, lastName, balance);
                 users.add(user);
             }
             return users;

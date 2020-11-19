@@ -25,12 +25,12 @@ public class EventsDaoJdbcImpl implements CrudDao<Event> {
             "DELETE FROM events WHERE id = ?";
     //language=SQL
     private final String SQL_UPDATE_BY_ID =
-            "UPDATE events SET team1 = ?, team2 = ? WHERE id = ?";
+            "UPDATE events SET team1 = ?, team2 = ?, status = ?, result = ?, total = ? WHERE id = ?";
 
     //language=SQL
     private final String SQL_INSERT_NEW =
-            "INSERT events(team1, team2) " +
-                    "VALUES (?, ?);";
+            "INSERT events(team1, team2, status) " +
+                    "VALUES (?, ?, ?);";
 
 
     private Connection connection;
@@ -50,7 +50,8 @@ public class EventsDaoJdbcImpl implements CrudDao<Event> {
             if(resultSet.next()) {
                 String team1 = resultSet.getString("team1");
                 String team2 = resultSet.getString("team2");
-                event = new Event(id, team1, team2);
+                String status = resultSet.getString("status");
+                event = new Event(id, team1, team2, status);
             }
 
 
@@ -66,6 +67,8 @@ public class EventsDaoJdbcImpl implements CrudDao<Event> {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW);
             statement.setString(1, model.getTeam1());
             statement.setString(2, model.getTeam2());
+            statement.setString(2, "не завершен");
+
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalStateException(e);
@@ -78,7 +81,13 @@ public class EventsDaoJdbcImpl implements CrudDao<Event> {
             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_BY_ID);
             statement.setString(1, model.getTeam1());
             statement.setString(2, model.getTeam2());
-            statement.setLong(3, model.getId());
+            statement.setString(3, model.getStatus());
+            if(model.getResult() != null)
+                statement.setString(4, model.getResult());
+            else
+                statement.setString(4, "");
+            statement.setInt(5, model.getTotal());
+            statement.setLong(6, model.getId());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new IllegalStateException(e);
@@ -108,8 +117,8 @@ public class EventsDaoJdbcImpl implements CrudDao<Event> {
                 Long id = resultSet.getLong("id");
                 String team1 = resultSet.getString("team1");
                 String team2 = resultSet.getString("team2");
-
-                Event event = new Event(id, team1, team2);
+                String status = resultSet.getString("status");
+                Event event = new Event(id, team1, team2, status);
                 events.add(event);
             }
             return events;

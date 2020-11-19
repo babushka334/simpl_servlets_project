@@ -54,7 +54,8 @@ public class BetsDaoJdbcImpl implements CrudDao<Bet> {
                 Long type_of_bet_id = resultSet.getLong("types_of_bet.id");
                 String team1 = resultSet.getString("team1");
                 String team2 = resultSet.getString("team2");
-                Event event = new Event(event_id, team1, team2);
+                String status = resultSet.getString("status");
+                Event event = new Event(event_id, team1, team2, status);
                 double coef = resultSet.getDouble("coefficient");
                 String value = resultSet.getString("value");
                 String type_of_bet = resultSet.getString("name");
@@ -118,13 +119,13 @@ public class BetsDaoJdbcImpl implements CrudDao<Bet> {
                 Long type_of_bet_id = resultSet.getLong("types_of_bet.id");
                 String team1 = resultSet.getString("team1");
                 String team2 = resultSet.getString("team2");
-                Event event = new Event(event_id, team1, team2);
+                String status = resultSet.getString("status");
+                Event event = new Event(event_id, team1, team2, status);
                 Long id = resultSet.getLong("bets.id");
                 double coef = resultSet.getDouble("coefficient");
                 String value = resultSet.getString("value");
                 String type_of_bet = resultSet.getString("name");
                 Bet bet = new Bet(id, coef, value, event, type_of_bet, type_of_bet_id);
-                System.out.println(bet);
                 bets.add(bet);
             }
             return bets;
